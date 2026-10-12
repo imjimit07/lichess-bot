@@ -1,23 +1,35 @@
 name: Lichess Bot Runner
-run: |
-  sed -i 's/token: ""/token: "${{ secrets.LICHESS_TOKEN }}"/' config.yml
+
 on:
   schedule:
-    - cron: '0 */5 * * *' # Triggers every 5 hours
-  workflow_dispatch:
+    - cron: '0 */5 * * *' # Auto-restarts every 5 hours
+  workflow_dispatch: # Allows manual run button in Actions tab
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install dependencies
+
+      - name: Install Dependencies
         run: pip install -r requirements.txt
-      - name: Run Bot
+
+      - name: Inject Lichess Token into config.yml
         env:
           LICHESS_TOKEN: ${{ secrets.LICHESS_TOKEN }}
+        run: |
+          sed -i "s/token: .*/token: \"$LICHESS_TOKEN\"/" config.yml
+
+      - name: Make Engine Executable
+        run: |
+          chmod +x engines/* || true
+
+      - name: Run Bot
         run: timeout 5h python lichess-bot.py || true
