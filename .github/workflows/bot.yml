@@ -20,6 +20,10 @@ jobs:
 
       - name: Install Dependencies
         run: pip install -r requirements.txt
+      
+      - name: Compile Chess Engine for Linux
+        run: |
+          g++ -O3 main.cpp -o engines/main_linux
 
       - name: Inject Lichess Token into config.yml
         env:
