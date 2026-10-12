@@ -5,7 +5,7 @@ url: "https://lichess.org/"
 
 engine:
   dir: "./engines/"
-  name: "chess_engine_uci.exe"
+  name: "main_linux.exe"
   protocol: "uci"
   ponder: true
   debug: false
