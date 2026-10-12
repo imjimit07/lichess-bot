@@ -1,0 +1,72 @@
+# Lichess-bot configuration for your chess engine
+
+token: ""
+url: "https://lichess.org/"
+
+engine:
+  dir: "./engines/"
+  name: "chess_engine_uci.exe"
+  protocol: "uci"
+  ponder: true
+  debug: false
+
+move_overhead: 2000
+abort_time: 30
+
+# Accept incoming challenges
+challenge:
+  concurrency: 1
+  accept_bot: true
+  only_bot: false
+  variants:
+    - standard
+    - chess960
+  time_controls:
+    - bullet
+    - blitz
+    - rapid
+    - classical
+  modes:
+    - casual
+    - rated
+  min_base: 30
+  max_base: 1800
+  min_increment: 0
+  max_increment: 30
+  min_rating: 1000
+  max_rating: 3000
+
+# Automatic outgoing challenges to other bots
+matchmaking:
+  allow_matchmaking: true
+  allow_during_games: false
+  challenge_timeout: 5           # Minutes idle before challenging
+  challenge_variant: "standard"
+  challenge_mode: "rated"
+  challenge_initial_time:
+    - 180
+    - 300
+  challenge_increment:
+    - 0
+    - 2
+  opponent_min_rating: 1200
+  opponent_max_rating: 2200
+  rating_preference: "none"
+  # challenge_filter: "fine"      # Auto-blacklist bots that decline
+
+correspondence:
+  move_time: 30
+  checkin_period: 300
+  disconnect_time: 150
+  ponder: false
+
+greeting:
+  hello: "Hi! I'm {me}. Good luck!"
+  goodbye: "Good game!"
+  hello_spectators: "Hi! I'm {me}."
+  goodbye_spectators: "Thanks for watching!"
+
+rate_limiting_delay: 0
+max_takebacks_accepted: 0
+quit_after_all_games_finish: false
+fake_think_time: false
