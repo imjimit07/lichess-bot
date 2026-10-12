@@ -1,4 +1,6 @@
 name: Lichess Bot Runner
+run: |
+  sed -i 's/token: ""/token: "${{ secrets.LICHESS_TOKEN }}"/' config.yml
 on:
   schedule:
     - cron: '0 */5 * * *' # Triggers every 5 hours
